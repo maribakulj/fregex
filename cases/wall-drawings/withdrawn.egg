@@ -1,0 +1,95 @@
+; flags: --proofs
+;
+; An identity that was withdrawn.
+;
+; Two things are said about Wall Drawing #679, both with "is". In 1991 a
+; wall in Houston is the wall drawing. After the wall is painted over, the
+; Menil's registrar writes that the drawing lives on only as a certificate
+; and a diagram.
+;
+; Part 1 reads both as identities. Part 2 does not.
+;
+; Run from this directory:  egglog --proofs withdrawn.egg
+
+(include "facts.egg")
+
+(sort Thing)
+(constructor surface (String) Thing)
+(constructor wall-drawing (String) Thing)
+(constructor papers (String) Thing)
+
+; (says-is source a b): this source says that a is b.
+(relation says-is (String Thing Thing))
+(says-is "execution of 1991"
+         (surface "stern-house/wall") (wall-drawing "679"))
+(says-is "menil registrar's letter"
+         (wall-drawing "679") (papers "menil/certificate and diagram"))
+
+; --- Part 1: "is" read as identity ----------------------------------------
+
+(ruleset identity)
+(rule ((says-is source a b))
+      ((union a b))
+      :ruleset identity :name "is-read-as-identity")
+
+(push)
+(run identity 1)
+
+; A plastered wall in a house in Houston is now the same thing as papers
+; in a museum's files. The proof names the two statements it took.
+(check (= (surface "stern-house/wall")
+          (papers "menil/certificate and diagram")))
+(prove (= (surface "stern-house/wall")
+          (papers "menil/certificate and diagram")))
+(pop)
+
+; --- Part 2: "is" read as "realizes, between two dates" -------------------
+; Nothing is unioned. The question takes a year.
+
+(relation asked (i64))
+(asked 1995)
+(asked 2013)
+(asked 2015)
+(asked 2018)
+
+(ruleset dated)
+(relation realized-in (i64 String String))
+(rule ((asked year) (realizes wall work from until)
+       (<= from year) (< year until))
+      ((realized-in year work wall))
+      :ruleset dated :name "realizes-between-dates")
+(relation painted-over-in (i64 String))
+(rule ((asked year) (painted-over-by wall by) (<= by year))
+      ((painted-over-in year wall))
+      :ruleset dated)
+(relation held-in (i64 String String String))
+(rule ((asked year) (holds holder what work since) (<= since year))
+      ((held-in year work holder what))
+      :ruleset dated)
+(relation being-uncovered-in (i64 String))
+(rule ((asked year) (uncovered-since wall since) (<= since year))
+      ((being-uncovered-in year wall))
+      :ruleset dated)
+(run dated 1)
+
+(extract "which wall realizes #679, by year asked")
+(print-function realized-in 10)
+(extract "which wall is painted over, by year asked")
+(print-function painted-over-in 10)
+(extract "who holds what of #679, by year asked")
+(print-function held-in 10)
+(extract "which wall is being uncovered, by year asked")
+(print-function being-uncovered-in 10)
+
+; A dated answer can still be explained: the rule, the rows, the year.
+(prove (realized-in 1995 "679" "stern-house/wall"))
+
+; The wall and the papers were never made one thing.
+(check (!= (surface "stern-house/wall")
+           (papers "menil/certificate and diagram")))
+; 2013 falls between the two bounds: neither realized nor painted over.
+(fail (check (realized-in 2013 "679" "stern-house/wall")))
+(fail (check (painted-over-in 2013 "stern-house/wall")))
+; In 2018 a wall is being uncovered and no record says it realizes #679.
+(check (being-uncovered-in 2018 "stern-house/wall"))
+(fail (check (realized-in 2018 "679" "stern-house/wall")))

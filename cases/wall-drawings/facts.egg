@@ -1,0 +1,71 @@
+; Sol LeWitt, Wall Drawings #289 and #679.
+;
+; A wall drawing has no sheet. What lasts is a set of instructions and a
+; certificate; what is on a wall is drawn for an occasion and can be
+; painted over. This case asks what an inventory number names when there
+; is no lasting object for it to name, and what becomes of an identity
+; that its own holder withdraws.
+;
+; Every row is transcribed by hand from a public page. SOURCES.md gives
+; the URL and the wording for each one.
+
+; --- What the inventory catalogues ----------------------------------------
+; (inventory-record number collection work walls)
+
+(relation inventory-record (String String String String))
+
+; The Whitney has four records for Wall Drawing #289, one per wall. Each
+; is classed as a drawing, "on wall", "dimensions variable".
+(inventory-record "78.1.1" "Whitney Museum of American Art" "289" "1st wall")
+(inventory-record "78.1.2" "Whitney Museum of American Art" "289" "2nd wall")
+(inventory-record "78.1.3" "Whitney Museum of American Art" "289" "3rd wall")
+(inventory-record "78.1.4" "Whitney Museum of American Art" "289" "4th wall")
+
+; --- Executions of Wall Drawing #289 --------------------------------------
+; (execution id n place work walls from until)
+; Dates are yyyymmdd. 00 stands for a day or a month the page does not
+; give, and 0 for a date it does not give at all. n lists pairs once.
+
+(relation execution (String i64 String String String i64 i64))
+
+(execution "detroit/first-installation" 1
+           "Detroit Institute of Arts" "289" "not stated" 0 0)
+(execution "moma/1978" 2
+           "The Museum of Modern Art" "289" "4th wall" 19780100 0)
+(execution "massmoca/retrospective" 3
+           "MASS MoCA" "289" "4th wall" 20081116 20430000)
+(execution "whitney/america-is-hard-to-see" 4
+           "Whitney Museum of American Art" "289" "4th wall" 20150501 20150927)
+(execution "whitney/programmed" 5
+           "Whitney Museum of American Art" "289" "4th wall" 20180928 20190414)
+
+; (carries execution scheme value): the identifier the page attaches to it.
+(relation carries (String String String))
+
+(carries "massmoca/retrospective"         "credit-line" "78.1.1-4")
+(carries "whitney/america-is-hard-to-see" "accession"   "78.1.4")
+(carries "whitney/programmed"             "accession"   "78.1.4")
+
+; --- Wall Drawing #679 ----------------------------------------------------
+; Drawn in 1991 on a wall of William Stern's house in Houston. Stern died
+; in 2013 and the house went to the Menil Collection, which painted the
+; drawing over when it decided to sell. The house was bought in 2014. The
+; buyers began to uncover the drawing in December 2017.
+
+; (realizes surface work from until), in years: on the wall from the first
+; year and still there at the start of the second. The year of the
+; painting over is not on the page; these are the two bounds that are.
+(relation realizes (String String i64 i64))
+(realizes "stern-house/wall" "679" 1991 2013)
+
+; (painted-over-by surface year): painted over in that year at the latest.
+(relation painted-over-by (String i64))
+(painted-over-by "stern-house/wall" 2014)
+
+; (holds holder what work since)
+(relation holds (String String String i64))
+(holds "menil" "certificate and diagram" "679" 2013)
+
+; (uncovered-since surface year)
+(relation uncovered-since (String i64))
+(uncovered-since "stern-house/wall" 2017)

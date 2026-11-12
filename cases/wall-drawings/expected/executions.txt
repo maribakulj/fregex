@@ -1,0 +1,17 @@
+"executions of the same wall in two places at once"
+(
+   (simultaneous "massmoca/retrospective" "whitney/america-is-hard-to-see") -> (simultaneous "massmoca/retrospective" "whitney/america-is-hard-to-see")
+   (simultaneous "massmoca/retrospective" "whitney/programmed") -> (simultaneous "massmoca/retrospective" "whitney/programmed")
+)
+"inventory number as key of the drawn wall: identified, refuted, unchecked"
+3
+2
+1
+(
+   (refuted "massmoca/retrospective" "whitney/america-is-hard-to-see") -> (refuted "massmoca/retrospective" "whitney/america-is-hard-to-see")
+   (refuted "massmoca/retrospective" "whitney/programmed") -> (refuted "massmoca/retrospective" "whitney/programmed")
+)
+(
+   (unchecked "whitney/america-is-hard-to-see" "whitney/programmed") -> (unchecked "whitney/america-is-hard-to-see" "whitney/programmed")
+)
+exit=0

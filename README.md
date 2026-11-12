@@ -10,11 +10,11 @@ in a drawer. Treating "same identifier" as "same object" can be right at
 one level and wrong one level down.
 
 This branch writes that question in [egglog](https://github.com/egraphs-good/egglog)
-and runs it on one real case. It has two results: what the records of the
-case allow one to say about each identifier, and a list of the places where
-egglog, built for a different kind of equality, resists.
+and runs it on two real cases. It has two results: what the records of
+each case allow one to say about its identifiers, and a list of the places
+where egglog, built for a different kind of equality, resists.
 
-## The case
+## The first case: a print
 
 Rembrandt's *Three Crosses* (Bartsch 78, New Hollstein 274): ten
 impressions in four collections, and two impressions of a second plate,
@@ -94,6 +94,55 @@ The proof egglog gives for the Wikidata identification, with the reading
 and the hypothesis as two named steps, is in
 [`expected/explain.txt`](cases/three-crosses/expected/explain.txt).
 
+## The second case: wall drawings
+
+The first case has a lowest level that lasts: the sheet, which an
+inventory number names. The second has none. A wall drawing by Sol LeWitt
+is drawn on a wall from instructions and can be painted over. The Whitney's
+records for *Wall Drawing #289* give its dimensions as variable and say
+that its only permanent form is a set of guidelines and a certificate.
+[`cases/wall-drawings/SOURCES.md`](cases/wall-drawings/SOURCES.md) gives
+the page behind every row.
+
+**An inventory number that names no object.** The Whitney has four numbers
+for #289, one per wall. The fourth, 78.1.4, was drawn at the Whitney in
+2015 and again in 2018–19. The same wall is drawn at MASS MoCA, where its
+credit line carries the range `78.1.1-4`. Read as a key of what is on the
+wall, the number identifies three pairs of executions:
+
+| Identifier | Read as key of | Pairs | Refuted | Unchecked |
+|---|---|---|---|---|
+| Whitney accession number (`78.1.4`) | the drawn wall | 3 | 2 | 1 |
+
+Two pairs are refuted: the wall was drawn in North Adams and in New York
+at the same time. The third is the two Whitney executions, and it is
+unchecked: no page says on which surface either was drawn. Nothing on the
+pages could corroborate a pair, so that column is absent.
+
+In the Three Crosses the inventory number was the one identifier that
+individuated the lowest level, and it refuted the others. Here it names the
+plan, and the lowest level has no identifier at all.
+
+The same two pairs contradict a sentence from an essay on these works,
+that they exist in one place at a time. This holds for the sentence taken
+literally, and it assumes that the wall at MASS MoCA has stayed drawn since
+2008, which its pages imply and do not state.
+
+**An identity that was withdrawn.** *Wall Drawing #679* was drawn in a
+house in Houston in 1991. The Menil Collection inherited the house, painted
+the drawing over before selling, and wrote that the drawing lives on only
+as a certificate and a diagram. If the two statements are read as
+identities, egglog proves that a wall in Houston is the papers in the
+Menil's files, and names the two statements it used. If they are read as
+"realizes, between two dates", the answers by year are the right ones: in
+1995 a wall; in 2015 a wall painted over and papers at the Menil; in 2018
+a wall being uncovered that no record calls the work. But nothing is
+merged any more, and egglog's equality has left the case.
+
+The outputs are in
+[`expected/executions.txt`](cases/wall-drawings/expected/executions.txt)
+and [`expected/withdrawn.txt`](cases/wall-drawings/expected/withdrawn.txt).
+
 ## Where egglog resists
 
 [`FRICTIONS.md`](FRICTIONS.md) has eleven observations, each with a program
@@ -105,6 +154,7 @@ in `frictions/` and its recorded output. In short:
 | A contradicted identification is refused, readably | The run aborts and its output is discarded; if the error is caught, the union stays |
 | Sources that disagree are kept side by side | One congruence; one source at a time inside `push`/`pop`; verdicts do not survive the `pop` |
 | A judgment can be withdrawn | The row can be deleted; what followed from it remains |
+| An identity can hold for a time | A union is permanent; a relation with dates works and uses no equality |
 | "Unchecked" is a verdict | Rules have no negation; obtained from a merge function and the order of rulesets |
 | An identity can be traced to its author | Proofs name the rule and the facts; the author only if written into the fact |
 
@@ -120,10 +170,12 @@ cargo install egglog --locked --version 3.0.0
 
 `check.sh` runs every program and compares its output with the file in the
 neighbouring `expected/` directory. `./check.sh --update` records the
-current output instead. The audit also carries its own `check` assertions,
-which fail the run whatever the recorded output says: identity must not go
-down a level, merging two sheets must be reported, and an unchecked pair
-must be neither refuted nor corroborated.
+current output instead. The case programs also carry their own `check`
+assertions, which fail the run whatever the recorded output says. In the
+first case: identity must not go down a level, merging two sheets must be
+reported, and an unchecked pair must be neither refuted nor corroborated.
+In the second: the two overlaps, the pair left unchecked, and the years for
+which nothing can be said.
 
 To run one program by hand, do it from its own directory, because
 `(include ...)` is resolved from the working directory:
@@ -132,12 +184,22 @@ To run one program by hand, do it from its own directory, because
 cd cases/three-crosses
 egglog audit.egg
 egglog --proofs explain.egg
+
+cd ../wall-drawings
+egglog executions.egg
+egglog --proofs withdrawn.egg
 ```
 
 ## Limits
 
-- One case, twelve records, two plates. The table says what holds for
-  these records.
+- Two small cases: twelve records and two plates; five executions of one
+  wall and one drawing that was painted over. The tables say what holds
+  for these records.
+- The facts about Wall Drawing #679 come from two press articles, not from
+  the Menil's records. The two statements read as identities in
+  `withdrawn.egg` are readings of those articles.
+- The overlap between MASS MoCA and the Whitney assumes that the wall at
+  MASS MoCA was drawn without interruption.
 - A plate is not a catalogue entry. No record here individuates plates
   except through a catalogue, so the audit can show two catalogues
   disagreeing and cannot show one being wrong.

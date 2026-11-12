@@ -98,6 +98,17 @@ creating it again does separate them, but an attribute that one sheet
 acquired from the other while they were one stays with it. There is no
 retraction, only starting again.
 
+The wall-drawings case has a withdrawal that happened in the world: a wall
+in Houston was Wall Drawing #679, and after it was painted over its holder
+wrote that the drawing lives on as papers.
+[`cases/wall-drawings/withdrawn.egg`](cases/wall-drawings/withdrawn.egg)
+writes this twice. With `union`, the wall and the papers become one thing
+and the engine proves it. Without `union`, as a relation with two dates,
+the answers are right and can still be proved. But then equality takes no
+part in the case at all: nothing is merged and nothing propagates, and
+the engine does what a Datalog would do. An identity that holds for a time
+has no form here between those two.
+
 ## Absence
 
 **08. "Unchecked" needs negation, and rules have none.** A rule cannot

@@ -1,0 +1,65 @@
+(let t0
+  (says-is
+                "execution of 1991"
+                (surface "stern-house/wall")
+                (wall-drawing "679")))
+(let t1
+  (says-is
+                "menil registrar's letter"
+                (wall-drawing "679")
+                (papers "menil/certificate and diagram")))
+(Trans
+  (= (surface "stern-house/wall") (papers "menil/certificate and diagram"))
+  (Sym
+    (= (surface "stern-house/wall") (wall-drawing "679"))
+    (Rule
+      (= (wall-drawing "679") (surface "stern-house/wall"))
+      (name "is-read-as-identity")
+      (premises (Fiat (= t0 t0)))
+      (substitution
+        (a (surface "stern-house/wall"))
+        (source "execution of 1991")
+        (b (wall-drawing "679")))))
+  (Sym
+    (= (wall-drawing "679") (papers "menil/certificate and diagram"))
+    (Rule
+      (= (papers "menil/certificate and diagram") (wall-drawing "679"))
+      (name "is-read-as-identity")
+      (premises (Fiat (= t1 t1)))
+      (substitution
+        (a (wall-drawing "679"))
+        (source "menil registrar's letter")
+        (b (papers "menil/certificate and diagram"))))))
+"which wall realizes #679, by year asked"
+(
+   (realized-in 1995 "679" "stern-house/wall") -> (realized-in 1995 "679" "stern-house/wall")
+)
+"which wall is painted over, by year asked"
+(
+   (painted-over-in 2015 "stern-house/wall") -> (painted-over-in 2015 "stern-house/wall")
+   (painted-over-in 2018 "stern-house/wall") -> (painted-over-in 2018 "stern-house/wall")
+)
+"who holds what of #679, by year asked"
+(
+   (held-in 2013 "679" "menil" "certificate and diagram") -> (held-in 2013 "679" "menil" "certificate and diagram")
+   (held-in 2015 "679" "menil" "certificate and diagram") -> (held-in 2015 "679" "menil" "certificate and diagram")
+   (held-in 2018 "679" "menil" "certificate and diagram") -> (held-in 2018 "679" "menil" "certificate and diagram")
+)
+"which wall is being uncovered, by year asked"
+(
+   (being-uncovered-in 2018 "stern-house/wall") -> (being-uncovered-in 2018 "stern-house/wall")
+)
+(let t0 (realized-in 1995 "679" "stern-house/wall"))
+(let t1 (realizes "stern-house/wall" "679" 1991 2013))
+(let prf0 (Fiat (= () ())))
+(Rule
+  (= t0 t0)
+  (name "realizes-between-dates")
+  (premises (Fiat (= (asked 1995) (asked 1995))) (Fiat (= t1 t1)) prf0 prf0)
+  (substitution
+    (work "679")
+    (wall "stern-house/wall")
+    (from 1991)
+    (year 1995)
+    (until 2013)))
+exit=0

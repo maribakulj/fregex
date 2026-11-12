@@ -1,0 +1,100 @@
+; One inventory number, two walls at once.
+;
+; In the Three Crosses case an inventory number names one sheet, and that
+; is what refutes every coarser identifier read as a key of sheets. Here
+; the Whitney's number 78.1.4 names the fourth wall of Wall Drawing #289,
+; and the pages record that wall drawn in two museums at the same time.
+;
+; Run from this directory:  egglog executions.egg
+
+(include "facts.egg")
+
+; --- A sentence about wall drawings, and the records ----------------------
+; An essay says that wall drawings exist in one place at a time (see
+; SOURCES.md). Taken literally: two executions of the same wall of the same
+; work, in two places, do not overlap. An execution whose end is not on the
+; page cannot be tested.
+
+(relation simultaneous (String String))
+(rule ((execution a i place-a work walls from-a until-a)
+       (execution b j place-b work walls from-b until-b)
+       (< i j) (!= place-a place-b)
+       (> until-a 0) (> until-b 0)
+       (<= from-a until-b) (<= from-b until-a))
+      ((simultaneous a b))
+      :name "two-places-at-once")
+
+; --- A reading ------------------------------------------------------------
+; MASS MoCA's credit line gives the range "78.1.1-4". Taking the range to
+; include 78.1.4 is a reading of the string, stated here and on no page.
+
+(relation range-includes (String String))
+(range-includes "78.1.1-4" "78.1.1")
+(range-includes "78.1.1-4" "78.1.2")
+(range-includes "78.1.1-4" "78.1.3")
+(range-includes "78.1.1-4" "78.1.4")
+
+; (bears execution number): the inventory number an execution carries,
+; itself or inside a range, when that number is catalogued for its wall.
+(relation bears (String String))
+(rule ((carries e "accession" number)
+       (execution e i place work walls from until)
+       (inventory-record number collection work walls))
+      ((bears e number)))
+(rule ((carries e "credit-line" range) (range-includes range number)
+       (execution e i place work walls from until)
+       (inventory-record number collection work walls))
+      ((bears e number))
+      :name "range-read-as-its-members")
+
+; --- The hypothesis -------------------------------------------------------
+; The inventory number is a key of what is on the wall: two executions that
+; bear the same number are the same drawn wall.
+
+(relation identified (String String))
+(function contradicted (String String) bool :merge (or old new))
+
+(ruleset find)
+(rule ((execution a i place-a work-a walls-a from-a until-a)
+       (execution b j place-b work-b walls-b from-b until-b)
+       (< i j) (bears a number) (bears b number))
+      ((identified a b) (set (contradicted a b) false))
+      :ruleset find)
+
+; Two places at one time, two walls. Nothing on the pages could confirm
+; that two executions are one drawn wall, so there is no "corroborated".
+(ruleset judge)
+(rule ((identified a b) (simultaneous a b))
+      ((set (contradicted a b) true))
+      :ruleset judge :name "two-places-two-walls")
+
+(ruleset report)
+(relation refuted (String String))
+(relation unchecked (String String))
+(rule ((= true (contradicted a b))) ((refuted a b)) :ruleset report)
+(rule ((= false (contradicted a b))) ((unchecked a b)) :ruleset report)
+
+(run 1)
+(run find 1) (run judge 1) (run report 1)
+
+(extract "executions of the same wall in two places at once")
+(print-function simultaneous 10)
+
+(extract "inventory number as key of the drawn wall: identified, refuted, unchecked")
+(print-size identified) (print-size refuted) (print-size unchecked)
+(print-function refuted 10)
+(print-function unchecked 10)
+
+; These hold whatever the recorded output says.
+(check (simultaneous "massmoca/retrospective" "whitney/america-is-hard-to-see"))
+(check (simultaneous "massmoca/retrospective" "whitney/programmed"))
+(check (refuted "massmoca/retrospective" "whitney/programmed"))
+; MASS MoCA's range covers four numbers and its wall bears only one.
+(check (bears "massmoca/retrospective" "78.1.4"))
+(fail (check (bears "massmoca/retrospective" "78.1.1")))
+; The two Whitney executions: same place, different years. Not refuted,
+; and nothing says they are one drawn wall either.
+(check (unchecked "whitney/america-is-hard-to-see" "whitney/programmed"))
+(fail (check (refuted "whitney/america-is-hard-to-see" "whitney/programmed")))
+; An execution with no end date is never judged simultaneous with anything.
+(fail (check (simultaneous "moma/1978" "massmoca/retrospective")))
