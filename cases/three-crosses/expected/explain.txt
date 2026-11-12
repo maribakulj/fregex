@@ -1,6 +1,28 @@
 (let prf0 (Fiat (= (audited "wikidata-p217") (audited "wikidata-p217"))))
 (let t0 (cites "rijksmuseum/RP-P-1962-39" "wikidata-p217" "Q1218084"))
-(let t1 (cites "met/41.1.31" "wikidata-p217" "Q1218084"))
+(let t1
+  (wikidata-statement
+                    "Q1218084"
+                    "P217"
+                    "RP-P-1962-39"
+                    "Rijksmuseum"))
+(let t2
+  (inventory-name
+                    "rijksmuseum/RP-P-1962-39"
+                    "Rijksmuseum"
+                    "RP-P-1962-39"))
+(let t3 (cites "met/41.1.31" "wikidata-p217" "Q1218084"))
+(let t4
+  (wikidata-statement
+                  "Q1218084"
+                  "P217"
+                  "41.1.31"
+                  "Metropolitan Museum of Art"))
+(let t5
+  (inventory-name
+                  "met/41.1.31"
+                  "Metropolitan Museum of Art"
+                  "41.1.31"))
 (Trans
   (= (sheet "rijksmuseum/RP-P-1962-39") (sheet "met/41.1.31"))
   (Sym
@@ -12,7 +34,17 @@
         (key-sheet "wikidata-p217" "Q1218084")
         (sheet "rijksmuseum/RP-P-1962-39"))
       (name "same-value-same-sheet")
-      (premises prf0 (Fiat (= t0 t0)))
+      (premises
+        prf0
+        (Rule
+          (= t0 t0)
+          (name "inventory-number-read-as-identity")
+          (premises (Fiat (= t1 t1)) (Fiat (= t2 t2)))
+          (substitution
+            (collection "Rijksmuseum")
+            (item "Q1218084")
+            (number "RP-P-1962-39")
+            (r "rijksmuseum/RP-P-1962-39"))))
       (substitution
         (scheme "wikidata-p217")
         (v "Q1218084")
@@ -20,6 +52,16 @@
   (Rule
     (= (key-sheet "wikidata-p217" "Q1218084") (sheet "met/41.1.31"))
     (name "same-value-same-sheet")
-    (premises prf0 (Fiat (= t1 t1)))
+    (premises
+      prf0
+      (Rule
+        (= t3 t3)
+        (name "inventory-number-read-as-identity")
+        (premises (Fiat (= t4 t4)) (Fiat (= t5 t5)))
+        (substitution
+          (collection "Metropolitan Museum of Art")
+          (item "Q1218084")
+          (number "41.1.31")
+          (r "met/41.1.31"))))
     (substitution (scheme "wikidata-p217") (v "Q1218084") (r "met/41.1.31"))))
 exit=0

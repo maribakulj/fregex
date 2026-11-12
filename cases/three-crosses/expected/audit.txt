@@ -1,36 +1,67 @@
 "bartsch as plate key"
+16
 0
-0
+16
 0
 "bartsch as state key"
-0
-11
+16
+12
+4
 0
 "bartsch as sheet key"
-15
-11
+16
+16
+0
+0
+"hollstein as plate key"
+16
+0
+16
 0
 "new-hollstein as plate key"
+22
 0
-0
-0
+21
+1
+(
+   (unchecked "ngv/1971-4" "cleveland/1959.241") -> (unchecked "ngv/1971-4" "cleveland/1959.241")
+)
 "new-hollstein as state key"
+22
+9
+2
+11
+"hind as plate key"
 0
-14
+0
+0
+0
+"bartsch-state as plate key"
+2
+0
+2
 0
 "bartsch-state as state key"
+2
 0
-0
+2
 0
 "bartsch-state as sheet key"
 2
+2
 0
 0
+(
+   (refuted "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-1962-39") -> (refuted "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-1962-39")
+   (refuted "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-1962-40") -> (refuted "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-1962-40")
+)
 "nh-state as state key"
+2
 0
-0
+2
 0
 "nh-state as sheet key"
+2
 2
 0
 0
@@ -38,47 +69,61 @@
 0
 0
 0
+0
 "met-object as sheet key"
 0
 0
 0
+0
+"lugt-mark as plate key"
+6
+3
+3
+0
+(
+   (refuted "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-611") -> (refuted "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-611")
+   (refuted "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-OB-611") -> (refuted "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-OB-611")
+   (refuted "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-OB-611") -> (refuted "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-OB-611")
+)
+(
+   (corroborated "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-617") -> (corroborated "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-617")
+   (corroborated "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-618") -> (corroborated "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-618")
+   (corroborated "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-OB-618") -> (corroborated "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-OB-618")
+)
+"lugt-mark as state key"
+6
+6
+0
+0
+"lugt-mark as sheet key"
+6
+6
+0
+0
 "wikidata-p217 as plate key"
+1
 0
 0
-0
+1
+(
+   (unchecked "rijksmuseum/RP-P-1962-39" "met/41.1.31") -> (unchecked "rijksmuseum/RP-P-1962-39" "met/41.1.31")
+)
 "wikidata-p217 as state key"
+1
 0
 0
 1
 "wikidata-p217 as sheet key"
 1
-0
 1
-"bartsch as state key: state-conflict"
+0
+0
 (
-   (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-617" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-617" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-618" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-OB-618" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-OB-618" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-OB-618" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-1962-39" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-1962-39" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-1962-39" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-1962-39" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-1962-40" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-616" "rijksmuseum/RP-P-1962-40" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-1962-40" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-1962-40" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-1962-39" "rijksmuseum/RP-P-1962-40" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-1962-39" "rijksmuseum/RP-P-1962-40" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-616" "ngv/1971-4" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-616" "ngv/1971-4" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-OB-617" "ngv/1971-4" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-OB-617" "ngv/1971-4" "new-hollstein")
-   (state-conflict "rijksmuseum/RP-P-1962-39" "ngv/1971-4" "new-hollstein") -> (state-conflict "rijksmuseum/RP-P-1962-39" "ngv/1971-4" "new-hollstein")
+   (refuted "rijksmuseum/RP-P-1962-39" "met/41.1.31") -> (refuted "rijksmuseum/RP-P-1962-39" "met/41.1.31")
 )
-"bartsch-state as sheet key: sheet-conflict"
-(
-   (sheet-conflict "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-1962-39") -> (sheet-conflict "rijksmuseum/RP-P-OB-617" "rijksmuseum/RP-P-1962-39")
-   (sheet-conflict "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-1962-40") -> (sheet-conflict "rijksmuseum/RP-P-OB-618" "rijksmuseum/RP-P-1962-40")
-)
-"wikidata-p217 as state key: state-unchecked"
-(
-   (state-unchecked "rijksmuseum/RP-P-1962-39" "met/41.1.31") -> (state-unchecked "rijksmuseum/RP-P-1962-39" "met/41.1.31")
-)
-"wikidata-p217 as sheet key: sheet-conflict"
-(
-   (sheet-conflict "rijksmuseum/RP-P-1962-39" "met/41.1.31") -> (sheet-conflict "rijksmuseum/RP-P-1962-39" "met/41.1.31")
-)
+"wikidata-p3634 as sheet key"
+0
+0
+0
+0
 exit=0

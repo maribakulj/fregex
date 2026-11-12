@@ -26,8 +26,9 @@ choices that suit its intended use; none is offered as a defect.
   level, run, read the contradictions, `(pop)`. The whole audit is that.
 - **Explaining an identity.** With `--proofs`, `(prove (= a b))` returns
   the rule that fired and the facts it used. For the two sheets that
-  Wikidata's inventory numbers bring together, the proof names both
-  citations (`cases/three-crosses/expected/explain.txt`).
+  Wikidata's inventory numbers bring together, the proof names the reading
+  of Wikidata's statements, the hypothesis, and the four facts they rest
+  on (`cases/three-crosses/expected/explain.txt`).
 
 ## Differences
 
@@ -99,12 +100,13 @@ retraction, only starting again.
 
 ## Absence
 
-**08. "Undetermined" needs negation, and rules have none.** A rule cannot
-test that a row is absent. The audit gets "these two states were identified
-and no shared scheme lets us check them" from a boolean with
-`:merge (or old new)`, set to `false` by one rule and `true` by another,
-and read by a third rule in a ruleset that runs afterwards. It works
-because the rulesets are run in a fixed order. The order is the negation.
+**08. "Unchecked" needs negation, and rules have none.** A rule cannot
+test that a row is absent. The audit gets "this pair was identified and no
+record says anything about it" from two booleans with
+`:merge (or old new)`, set to `false` when the pair is found and to `true`
+by the rules that judge it, and read in a ruleset that runs afterwards. It
+works because the rulesets are run in a fixed order. The order is the
+negation.
 
 ## Smaller things
 
@@ -112,7 +114,7 @@ because the rulesets are run in a fixed order. The order is the negation.
   index to list each pair once.
 - `(include "facts.egg")` is resolved from the working directory, not from
   the including file. `check.sh` changes directory for that reason.
-- With `--proofs`, the merge function used for "undetermined" draws a
+- With `--proofs`, the merge functions used for "unchecked" draw a
   warning that the program is not in proof normal form. The audit prints
   the same output with and without the flag.
 

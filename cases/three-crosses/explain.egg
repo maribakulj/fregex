@@ -3,6 +3,10 @@
 ; Why are these two sheets identified once Wikidata's inventory numbers are
 ; read as a key for sheets? Ask egglog for the proof.
 ;
+; The proof has two steps, and both are named: the reading that turns
+; "the item has this inventory number" into "the record is the item", and
+; the hypothesis that the item is a sheet.
+;
 ; Run from this directory:  egglog --proofs explain.egg
 
 (include "facts.egg")
@@ -12,6 +16,13 @@
       ((plate-of (state-of (sheet r))))
       :ruleset setup)
 (run setup 1)
+
+(ruleset readings)
+(rule ((wikidata-statement item "P217" number collection)
+       (inventory-name r collection number))
+      ((cites r "wikidata-p217" item))
+      :ruleset readings :name "inventory-number-read-as-identity")
+(run readings 1)
 
 (relation audited (String))
 (constructor key-sheet (String String) Sheet)
@@ -24,5 +35,4 @@
 (audited "wikidata-p217")
 (run as-sheet-key 1)
 
-; The proof names the rule, the hypothesis and the two citations it used.
 (prove (= (sheet "rijksmuseum/RP-P-1962-39") (sheet "met/41.1.31")))

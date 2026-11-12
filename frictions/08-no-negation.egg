@@ -1,11 +1,11 @@
-; Requirement: "undetermined" is a verdict: neither an identity nor a
+; Requirement: "unchecked" is a verdict: neither an identity nor a
 ; difference has been judged.
 ;
 ; That is a statement about what is absent, so it needs negation.
 ;
 ; Observed: a rule cannot test that a row is absent. `not` is the boolean
-; operator only. cases/three-crosses/audit.egg gets "undetermined" another
-; way: a boolean with :merge (or old new), read in a later ruleset.
+; operator only. cases/three-crosses/audit.egg gets "unchecked" another
+; way: booleans with :merge (or old new), read in a later ruleset.
 
 (relation record (String))
 (relation state-known (String))
