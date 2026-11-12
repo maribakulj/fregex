@@ -1,0 +1,21 @@
+; flags: --proofs
+;
+; Requirement: every identity can be traced to who judged it.
+;
+; Observed: (prove ...) returns the rule that fired and the facts it used.
+; An asserted fact is a "Fiat": it has no author. The author appears in
+; the proof only if the source was written into the fact as an argument,
+; as it is here.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+
+(relation judged-same (String String String))
+(judged-same "wikidata" "rijksmuseum/RP-P-1962-39" "met/41.1.31")
+
+(rule ((judged-same source x y))
+      ((union (sheet x) (sheet y)))
+      :name "trust-every-source")
+(run 1)
+
+(prove (= (sheet "rijksmuseum/RP-P-1962-39") (sheet "met/41.1.31")))

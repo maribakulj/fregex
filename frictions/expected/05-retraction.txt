@@ -1,0 +1,6 @@
+"identified; a now has b's state number:"
+4
+"judgment withdrawn; still identified"
+"term deleted and recreated; separated, but a keeps b's state number:"
+4
+exit=0

@@ -1,0 +1,13 @@
+; flags: --proofs
+;
+; Requirement: refusals and proofs work together.
+;
+; Observed: with --proofs, a function declared :no-merge is rejected before
+; the program runs. The built-in way to refuse a merge (frictions 02, 03)
+; and the built-in way to explain one cannot be used in the same run.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+(function inventory-name (Sheet) String :no-merge)
+
+(set (inventory-name (sheet "a")) "a")

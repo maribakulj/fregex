@@ -1,0 +1,22 @@
+; Requirement: an identification that contradicts a judged difference is
+; refused, and the refusal is a result one can read.
+;
+; egglog's own way to say "these two cannot be merged" is a function with
+; :no-merge: two sheets with two inventory names cannot become one sheet.
+;
+; Observed: the union is refused by aborting the whole run. Exit code 1,
+; one line on stderr, and everything printed before it is discarded.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+(function inventory-name (Sheet) String :no-merge)
+
+(set (inventory-name (sheet "a")) "a")
+(set (inventory-name (sheet "b")) "b")
+
+(extract "this line is printed before the refusal and never shown")
+
+(union (sheet "a") (sheet "b"))
+(run 1)
+
+(extract "never reached")

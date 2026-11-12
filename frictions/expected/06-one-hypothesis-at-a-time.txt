@@ -1,0 +1,11 @@
+"under source-1"
+(
+   (same-under "source-1" "a" "b") -> (same-under "source-1" "a" "b")
+)
+"under source-2"
+(
+)
+"after both: what is left of the verdicts"
+(
+)
+exit=0

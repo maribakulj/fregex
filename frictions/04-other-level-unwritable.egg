@@ -1,0 +1,13 @@
+; Requirement: asking whether a sheet is the same thing as a plate gets an
+; answer, even if the answer is "undetermined".
+;
+; Observed: the question cannot be written. Sorts keep levels apart, which
+; is what we want, but as a type error, not as a verdict. Any bridge
+; between levels has to be a function one declares (state-of, plate-of).
+
+(sort Sheet)
+(sort Plate)
+(constructor sheet (String) Sheet)
+(constructor bartsch (String) Plate)
+
+(check (= (sheet "met/41.1.31") (bartsch "78")))

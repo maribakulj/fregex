@@ -1,0 +1,13 @@
+; flags: --proofs
+;
+; Requirement: a difference can be justified the way an identity can.
+;
+; Observed: (prove (!= a b)) succeeds, and what it returns is not a
+; derivation of the difference. It certifies that both terms exist and
+; that the test passed just now.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+(sheet "a") (sheet "b")
+
+(prove (!= (sheet "a") (sheet "b")))

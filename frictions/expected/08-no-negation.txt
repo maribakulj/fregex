@@ -1,0 +1,3 @@
+[ERROR] In 17:24-38 of 08-no-negation.egg: (state-known r)
+     Expect expression @state-known2 to have type bool, but get type @stateknownSort
+exit=1

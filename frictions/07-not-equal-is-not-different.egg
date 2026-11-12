@@ -1,0 +1,25 @@
+; Requirement: "different" means somebody judged these two to be different.
+;
+; Observed: (!= x y) means "not identified so far". A conclusion drawn from
+; it stays in the database after the two are identified.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+(relation record (String))
+(record "a") (record "b")
+(sheet "a") (sheet "b")
+
+(relation different (String String))
+(rule ((record x) (record y) (!= (sheet x) (sheet y)))
+      ((different x y)))
+(run 1)
+
+(extract "before the identification")
+(print-function different 10)
+
+(union (sheet "a") (sheet "b"))
+(run 1)
+(check (= (sheet "a") (sheet "b")))
+
+(extract "after: a and b are one sheet, and still recorded as different")
+(print-function different 10)

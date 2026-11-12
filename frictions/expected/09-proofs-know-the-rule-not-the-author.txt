@@ -1,0 +1,12 @@
+(let t0 (judged-same "wikidata" "rijksmuseum/RP-P-1962-39" "met/41.1.31"))
+(Sym
+  (= (sheet "rijksmuseum/RP-P-1962-39") (sheet "met/41.1.31"))
+  (Rule
+    (= (sheet "met/41.1.31") (sheet "rijksmuseum/RP-P-1962-39"))
+    (name "trust-every-source")
+    (premises (Fiat (= t0 t0)))
+    (substitution
+      (source "wikidata")
+      (x "rijksmuseum/RP-P-1962-39")
+      (y "met/41.1.31"))))
+exit=0

@@ -1,0 +1,16 @@
+"before the identification"
+(
+   (different (sheet "a") (sheet "b")) -> (different (sheet "a") (sheet "b"))
+)
+"after: the difference between objects"
+(
+   (different (sheet "a") (sheet "a")) -> (different (sheet "a") (sheet "a"))
+)
+"after: the difference between names"
+(
+   (different-names "a" "b") -> (different-names "a" "b")
+)
+(
+   (contradiction "a" "b") -> (contradiction "a" "b")
+)
+exit=0

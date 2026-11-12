@@ -1,0 +1,9 @@
+(Rule
+  (= (@ExistsConstructor) (@ExistsConstructor))
+  (name "@prove_exists_rule")
+  (premises
+    (Fiat (= (sheet "a") (sheet "a")))
+    (Fiat (= (sheet "b") (sheet "b")))
+    (Fiat (= () ())))
+  (substitution (@v9 (sheet "a")) (@v10 (sheet "b"))))
+exit=0

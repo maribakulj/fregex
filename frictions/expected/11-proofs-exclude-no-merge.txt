@@ -1,0 +1,6 @@
+[ERROR] Command is not supported by the current proof term encoding implementation.
+    Reason: missing merge function. All functions need to specify a :merge function.
+    This typically means the command uses constructs that cannot yet be represented as proof terms.
+    Consider disabling proof term encoding for this run or rewriting the command to avoid unsupported features.
+    Offending command: (function inventory-name (Sheet) String :no-merge :unextractable)
+exit=1

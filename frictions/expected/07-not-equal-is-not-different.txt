@@ -1,0 +1,11 @@
+"before the identification"
+(
+   (different "b" "a") -> (different "b" "a")
+   (different "a" "b") -> (different "a" "b")
+)
+"after: a and b are one sheet, and still recorded as different"
+(
+   (different "b" "a") -> (different "b" "a")
+   (different "a" "b") -> (different "a" "b")
+)
+exit=0

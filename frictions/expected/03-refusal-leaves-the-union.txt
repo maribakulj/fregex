@@ -1,0 +1,7 @@
+"before: a and b are not identified"
+"the union was refused"
+"and yet a and b are now identified; inventory names left:"
+(
+   (inventory-name (sheet "a")) -> "a"
+)
+exit=0

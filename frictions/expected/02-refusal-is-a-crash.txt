@@ -1,0 +1,2 @@
+[ERROR] Panic: Illegal merge attempted for function inventory-name
+exit=1

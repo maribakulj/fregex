@@ -1,0 +1,25 @@
+(let prf0 (Fiat (= (audited "wikidata-p217") (audited "wikidata-p217"))))
+(let t0 (cites "rijksmuseum/RP-P-1962-39" "wikidata-p217" "Q1218084"))
+(let t1 (cites "met/41.1.31" "wikidata-p217" "Q1218084"))
+(Trans
+  (= (sheet "rijksmuseum/RP-P-1962-39") (sheet "met/41.1.31"))
+  (Sym
+    (=
+      (sheet "rijksmuseum/RP-P-1962-39")
+      (key-sheet "wikidata-p217" "Q1218084"))
+    (Rule
+      (=
+        (key-sheet "wikidata-p217" "Q1218084")
+        (sheet "rijksmuseum/RP-P-1962-39"))
+      (name "same-value-same-sheet")
+      (premises prf0 (Fiat (= t0 t0)))
+      (substitution
+        (scheme "wikidata-p217")
+        (v "Q1218084")
+        (r "rijksmuseum/RP-P-1962-39"))))
+  (Rule
+    (= (key-sheet "wikidata-p217" "Q1218084") (sheet "met/41.1.31"))
+    (name "same-value-same-sheet")
+    (premises prf0 (Fiat (= t1 t1)))
+    (substitution (scheme "wikidata-p217") (v "Q1218084") (r "met/41.1.31"))))
+exit=0

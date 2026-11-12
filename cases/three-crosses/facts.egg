@@ -1,0 +1,124 @@
+; Rembrandt, "Christ Crucified between the Two Thieves: The Three Crosses"
+; (Bartsch 78, New Hollstein 274). Ten impressions in four collections.
+;
+; Every row below is transcribed by hand from a public collection record.
+; SOURCES.md gives the URL and the wording for each one. Nothing here is
+; extracted automatically and nothing is inferred: where a record does not
+; state something, there is no row.
+
+; --- Levels ---------------------------------------------------------------
+; Three sorts, one per level at which a print can be "the same".
+
+(sort Sheet)   ; one impression: a sheet held by one collection
+(sort State)   ; a state of the plate
+(sort Plate)   ; the copper plate, i.e. one entry in a catalogue raisonne
+
+; A sheet is given by the name its holder's inventory gives it.
+(constructor sheet (String) Sheet)
+
+; The two abstractions. Congruence makes them go upward only:
+; same sheet => same state => same plate, never the reverse.
+(constructor state-of (Sheet) State)
+(constructor plate-of (State) Plate)
+
+; --- Records --------------------------------------------------------------
+
+; The number is only there to list each pair of records once.
+(relation record (String i64))
+
+(record "rijksmuseum/RP-P-OB-616" 1)
+(record "rijksmuseum/RP-P-OB-617" 2)
+(record "rijksmuseum/RP-P-OB-618" 3)
+(record "rijksmuseum/RP-P-1962-39" 4)
+(record "rijksmuseum/RP-P-1962-40" 5)
+(record "met/41.1.31" 6)
+(record "met/41.1.32" 7)
+(record "met/41.1.33" 8)
+(record "ngv/1971-4" 9)
+(record "cleveland/1959.241" 10)
+
+; --- What the records cite ------------------------------------------------
+; (cites record scheme value): the record carries this identifier.
+; Schemes:
+;   bartsch, new-hollstein, hind   catalogue numbers
+;   bartsch-state, nh-state        catalogue number plus state, as the
+;                                  Rijksmuseum writes them: "78-3(5)"
+;   rijks-pid, met-object          the holder's own persistent identifier
+;   wikidata-p217                  the Wikidata item that lists this
+;                                  inventory number
+
+(relation cites (String String String))
+
+; Rijksmuseum: catalogue references are given with the state.
+(cites "rijksmuseum/RP-P-OB-616"  "bartsch-state" "78-1(5)")
+(cites "rijksmuseum/RP-P-OB-616"  "nh-state"      "274-1(5)")
+(cites "rijksmuseum/RP-P-OB-617"  "bartsch-state" "78-3(5)")
+(cites "rijksmuseum/RP-P-OB-617"  "nh-state"      "274-3(5)")
+(cites "rijksmuseum/RP-P-OB-618"  "bartsch-state" "78-4(5)")
+(cites "rijksmuseum/RP-P-OB-618"  "nh-state"      "274-4(5)")
+(cites "rijksmuseum/RP-P-1962-39" "bartsch-state" "78-3(5)")
+(cites "rijksmuseum/RP-P-1962-39" "nh-state"      "274-3(5)")
+(cites "rijksmuseum/RP-P-1962-40" "bartsch-state" "78-4(5)")
+(cites "rijksmuseum/RP-P-1962-40" "nh-state"      "274-4(5)")
+
+; The bare catalogue number is contained in those strings.
+(cites "rijksmuseum/RP-P-OB-616"  "bartsch" "78")
+(cites "rijksmuseum/RP-P-OB-617"  "bartsch" "78")
+(cites "rijksmuseum/RP-P-OB-618"  "bartsch" "78")
+(cites "rijksmuseum/RP-P-1962-39" "bartsch" "78")
+(cites "rijksmuseum/RP-P-1962-40" "bartsch" "78")
+(cites "rijksmuseum/RP-P-OB-616"  "new-hollstein" "274")
+(cites "rijksmuseum/RP-P-OB-617"  "new-hollstein" "274")
+(cites "rijksmuseum/RP-P-OB-618"  "new-hollstein" "274")
+(cites "rijksmuseum/RP-P-1962-39" "new-hollstein" "274")
+(cites "rijksmuseum/RP-P-1962-40" "new-hollstein" "274")
+
+; NGV and Cleveland: catalogue numbers, state given separately.
+(cites "ngv/1971-4"         "bartsch"       "78")
+(cites "ngv/1971-4"         "hind"          "270")
+(cites "ngv/1971-4"         "new-hollstein" "274")
+(cites "cleveland/1959.241" "new-hollstein" "274")
+
+; The Met records as fetched carry no catalogue number at all.
+
+; Holders' persistent identifiers.
+(cites "rijksmuseum/RP-P-OB-616"  "rijks-pid" "200124983")
+(cites "rijksmuseum/RP-P-OB-617"  "rijks-pid" "200124981")
+(cites "rijksmuseum/RP-P-OB-618"  "rijks-pid" "200124982")
+(cites "rijksmuseum/RP-P-1962-39" "rijks-pid" "200124978")
+(cites "rijksmuseum/RP-P-1962-40" "rijks-pid" "200124979")
+(cites "met/41.1.31" "met-object" "354631")
+(cites "met/41.1.32" "met-object" "347371")
+(cites "met/41.1.33" "met-object" "359757")
+
+; Wikidata Q1218084 ("The Three Crosses") lists inventory numbers from
+; several collections on a single item. Two of them are records above.
+; (Seen in search-result snippets only; see SOURCES.md.)
+(cites "rijksmuseum/RP-P-1962-39" "wikidata-p217" "Q1218084")
+(cites "met/41.1.31"              "wikidata-p217" "Q1218084")
+
+; --- Judged differences ---------------------------------------------------
+; A difference is somebody's judgment, like an identity. Two kinds here.
+;
+; 1. Sheets. An inventory individuates sheets: two different inventory
+;    names are two different sheets. This needs no rows; it is the rule
+;    `inventory-individuates` in audit.egg.
+;
+; 2. States. (state-number record scheme n): this record places its sheet
+;    in state n of the plate, counted in this scheme. Two records disagree
+;    only when they use the same scheme.
+
+(relation state-number (String String i64))
+
+(state-number "rijksmuseum/RP-P-OB-616"  "new-hollstein" 1)
+(state-number "rijksmuseum/RP-P-OB-617"  "new-hollstein" 3)
+(state-number "rijksmuseum/RP-P-OB-618"  "new-hollstein" 4)
+(state-number "rijksmuseum/RP-P-1962-39" "new-hollstein" 3)
+(state-number "rijksmuseum/RP-P-1962-40" "new-hollstein" 4)
+(state-number "ngv/1971-4"               "new-hollstein" 4)
+(state-number "cleveland/1959.241"       "new-hollstein" 4)
+
+; The Met names a state without naming the catalogue it counts in.
+(state-number "met/41.1.31" "met-unspecified" 2)
+(state-number "met/41.1.33" "met-unspecified" 4)
+; met/41.1.32: no state on the record as fetched.

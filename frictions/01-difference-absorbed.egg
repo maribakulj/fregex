@@ -1,0 +1,33 @@
+; Requirement: a judged difference is a fact in its own right.
+;
+; Observed: a difference stated between two objects does not survive their
+; identification. After the union the row reads "a is different from a".
+; A difference stated between two names does survive, and can be checked.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+(sheet "a") (sheet "b")
+
+; 1. The difference is about the objects.
+(relation different (Sheet Sheet))
+(different (sheet "a") (sheet "b"))
+
+; 2. The difference is about the names.
+(relation different-names (String String))
+(different-names "a" "b")
+
+(relation contradiction (String String))
+(rule ((different-names x y) (= (sheet x) (sheet y)))
+      ((contradiction x y)))
+
+(extract "before the identification")
+(print-function different 10)
+
+(union (sheet "a") (sheet "b"))
+(run 1)
+
+(extract "after: the difference between objects")
+(print-function different 10)
+(extract "after: the difference between names")
+(print-function different-names 10)
+(print-function contradiction 10)

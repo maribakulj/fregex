@@ -1,0 +1,39 @@
+; Requirement: a source can withdraw a judgment, and what followed from it
+; goes with it.
+;
+; Observed:
+; 1. Deleting the judgment does not undo the identification it caused.
+; 2. Deleting the term and creating it again does separate the two sheets,
+;    but what one sheet acquired from the other while they were one stays.
+
+(sort Sheet)
+(sort State)
+(constructor sheet (String) Sheet)
+(constructor state-of (Sheet) State)
+(function state-number (State) i64 :merge (max old new))
+
+(state-of (sheet "a"))
+(state-of (sheet "b"))
+(set (state-number (state-of (sheet "b"))) 4)
+
+(relation judged-same (String String String))
+(judged-same "source-1" "a" "b")
+(rule ((judged-same source x y))
+      ((union (sheet x) (sheet y))))
+(run 1)
+
+(check (= (sheet "a") (sheet "b")))
+(extract "identified; a now has b's state number:")
+(extract (state-number (state-of (sheet "a"))))
+
+(delete (judged-same "source-1" "a" "b"))
+(run 1)
+(check (= (sheet "a") (sheet "b")))
+(extract "judgment withdrawn; still identified")
+
+(delete (sheet "b"))
+(sheet "b")
+(run 1)
+(check (!= (sheet "a") (sheet "b")))
+(extract "term deleted and recreated; separated, but a keeps b's state number:")
+(extract (state-number (state-of (sheet "a"))))

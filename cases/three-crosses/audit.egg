@@ -1,0 +1,214 @@
+; At which level is each identifier a key?
+;
+; An identifier scheme is a key at a level if treating "same value" as
+; "same object at that level" contradicts no judged difference. The level
+; of an identifier is the finest level at which it is a key.
+;
+; Run from this directory:  egglog audit.egg
+
+(include "facts.egg")
+
+; --- Setup: every record presents a sheet, its state and its plate --------
+
+(ruleset setup)
+(rule ((record r i))
+      ((plate-of (state-of (sheet r))))
+      :ruleset setup)
+(run setup 1)
+
+; --- Hypotheses: "this scheme is a key at this level" ---------------------
+; One ruleset per level. `audited` selects the scheme under test.
+
+(relation audited (String))
+
+(constructor key-plate (String String) Plate)
+(constructor key-state (String String) State)
+(constructor key-sheet (String String) Sheet)
+
+(ruleset as-plate-key)
+(rule ((audited scheme) (cites r scheme v))
+      ((union (key-plate scheme v) (plate-of (state-of (sheet r)))))
+      :ruleset as-plate-key)
+
+(ruleset as-state-key)
+(rule ((audited scheme) (cites r scheme v))
+      ((union (key-state scheme v) (state-of (sheet r))))
+      :ruleset as-state-key)
+
+(ruleset as-sheet-key)
+(rule ((audited scheme) (cites r scheme v))
+      ((union (key-sheet scheme v) (sheet r)))
+      :ruleset as-sheet-key)
+
+; --- Judged differences, checked after the hypothesis is applied ----------
+
+(ruleset differences)
+
+; An inventory individuates sheets: two inventory names, two sheets.
+(relation sheet-conflict (String String))
+(rule ((record r1 i) (record r2 j) (< i j)
+       (= (sheet r1) (sheet r2)))
+      ((sheet-conflict r1 r2))
+      :ruleset differences :name "inventory-individuates")
+
+; Two records that count states in the same scheme and give different
+; numbers place their sheets in different states.
+(relation state-conflict (String String String))
+(rule ((record r1 i) (record r2 j) (< i j)
+       (state-number r1 scheme m) (state-number r2 scheme n) (!= m n)
+       (= (state-of (sheet r1)) (state-of (sheet r2))))
+      ((state-conflict r1 r2 scheme))
+      :ruleset differences :name "state-numbers-disagree")
+
+; Identified states that no shared scheme lets us compare. egglog has no
+; negation, so "no shared scheme" is a lattice value read in a later
+; ruleset: false unless some scheme is shared.
+(function comparable (String String) bool :merge (or old new))
+(rule ((record r1 i) (record r2 j) (< i j)
+       (= (state-of (sheet r1)) (state-of (sheet r2))))
+      ((set (comparable r1 r2) false))
+      :ruleset differences)
+(rule ((record r1 i) (record r2 j) (< i j)
+       (state-number r1 scheme m) (state-number r2 scheme n)
+       (= (state-of (sheet r1)) (state-of (sheet r2))))
+      ((set (comparable r1 r2) true))
+      :ruleset differences)
+
+(ruleset report)
+(relation state-unchecked (String String))
+(rule ((= (comparable r1 r2) false))
+      ((state-unchecked r1 r2))
+      :ruleset report)
+
+; --- The audit ------------------------------------------------------------
+; Each block: assume, propagate, look for contradicted differences, undo.
+; Three numbers per block: sheet conflicts, state conflicts, state pairs
+; identified without any shared scheme to check them.
+
+(push)
+(extract "bartsch as plate key")
+(audited "bartsch")
+(run as-plate-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "bartsch as state key")
+(audited "bartsch")
+(run as-state-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "bartsch as sheet key")
+(audited "bartsch")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "new-hollstein as plate key")
+(audited "new-hollstein")
+(run as-plate-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "new-hollstein as state key")
+(audited "new-hollstein")
+(run as-state-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "bartsch-state as state key")
+(audited "bartsch-state")
+(run as-state-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "bartsch-state as sheet key")
+(audited "bartsch-state")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "nh-state as state key")
+(audited "nh-state")
+(run as-state-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "nh-state as sheet key")
+(audited "nh-state")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "rijks-pid as sheet key")
+(audited "rijks-pid")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "met-object as sheet key")
+(audited "met-object")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "wikidata-p217 as plate key")
+(audited "wikidata-p217")
+(run as-plate-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "wikidata-p217 as state key")
+(audited "wikidata-p217")
+(run as-state-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+(push)
+(extract "wikidata-p217 as sheet key")
+(audited "wikidata-p217")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-size sheet-conflict) (print-size state-conflict) (print-size state-unchecked)
+(pop)
+
+; --- The pairs behind the non-zero counts -----------------------------------
+
+(push)
+(extract "bartsch as state key: state-conflict")
+(audited "bartsch")
+(run as-state-key 1) (run differences 1) (run report 1)
+(print-function state-conflict 100)
+(pop)
+
+(push)
+(extract "bartsch-state as sheet key: sheet-conflict")
+(audited "bartsch-state")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-function sheet-conflict 100)
+(pop)
+
+(push)
+(extract "wikidata-p217 as state key: state-unchecked")
+(audited "wikidata-p217")
+(run as-state-key 1) (run differences 1) (run report 1)
+(print-function state-unchecked 100)
+(pop)
+
+(push)
+(extract "wikidata-p217 as sheet key: sheet-conflict")
+(audited "wikidata-p217")
+(run as-sheet-key 1) (run differences 1) (run report 1)
+(print-function sheet-conflict 100)
+(pop)

@@ -1,0 +1,23 @@
+; Requirement: a refused identification leaves things as they were.
+;
+; (fail ...) lets a program expect an error and carry on.
+;
+; Observed: the error is caught, but the union has already happened. The
+; two sheets are now one, and one of the two inventory names is gone.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+(function inventory-name (Sheet) String :no-merge)
+
+(set (inventory-name (sheet "a")) "a")
+(set (inventory-name (sheet "b")) "b")
+
+(check (!= (sheet "a") (sheet "b")))
+(extract "before: a and b are not identified")
+
+(fail (union (sheet "a") (sheet "b")))
+(extract "the union was refused")
+
+(check (= (sheet "a") (sheet "b")))
+(extract "and yet a and b are now identified; inventory names left:")
+(print-function inventory-name 10)

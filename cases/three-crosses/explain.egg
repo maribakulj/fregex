@@ -1,0 +1,28 @@
+; flags: --proofs
+;
+; Why are these two sheets identified once Wikidata's inventory numbers are
+; read as a key for sheets? Ask egglog for the proof.
+;
+; Run from this directory:  egglog --proofs explain.egg
+
+(include "facts.egg")
+
+(ruleset setup)
+(rule ((record r i))
+      ((plate-of (state-of (sheet r))))
+      :ruleset setup)
+(run setup 1)
+
+(relation audited (String))
+(constructor key-sheet (String String) Sheet)
+
+(ruleset as-sheet-key)
+(rule ((audited scheme) (cites r scheme v))
+      ((union (key-sheet scheme v) (sheet r)))
+      :ruleset as-sheet-key :name "same-value-same-sheet")
+
+(audited "wikidata-p217")
+(run as-sheet-key 1)
+
+; The proof names the rule, the hypothesis and the two citations it used.
+(prove (= (sheet "rijksmuseum/RP-P-1962-39") (sheet "met/41.1.31")))

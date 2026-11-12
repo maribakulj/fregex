@@ -1,0 +1,41 @@
+; Requirement: two sources that disagree are both kept, side by side, and
+; one can ask under which of them two things are the same.
+;
+; Observed: there is one congruence. A source's identifications can be
+; tried inside (push) ... (pop), one source at a time. Nothing computed
+; inside survives the pop, including the verdict, so the comparison
+; between sources has to be made outside egglog, by reading its output.
+
+(sort Sheet)
+(constructor sheet (String) Sheet)
+(sheet "a") (sheet "b")
+
+(relation judged-same (String String String))
+(judged-same "source-1" "a" "b")
+; source-2 makes no such judgment.
+
+(relation trusted (String))
+(rule ((trusted source) (judged-same source x y))
+      ((union (sheet x) (sheet y))))
+
+; Where we would like to keep one verdict per source.
+(relation same-under (String String String))
+(rule ((trusted source) (= (sheet "a") (sheet "b")))
+      ((same-under source "a" "b")))
+
+(push)
+(trusted "source-1")
+(run 2)
+(extract "under source-1")
+(print-function same-under 10)
+(pop)
+
+(push)
+(trusted "source-2")
+(run 2)
+(extract "under source-2")
+(print-function same-under 10)
+(pop)
+
+(extract "after both: what is left of the verdicts")
+(print-function same-under 10)
