@@ -1,0 +1,156 @@
+"bartsch as plate key"
+16
+0
+16
+0
+"bartsch as state key"
+16
+12
+4
+0
+"bartsch as sheet key"
+16
+16
+0
+0
+"hollstein as plate key"
+16
+0
+16
+0
+"new-hollstein as plate key"
+22
+0
+21
+1
+  unchecked  ngv/1971-4  cleveland/1959.241
+"new-hollstein as state key"
+22
+9
+2
+11
+"hind as plate key"
+0
+0
+0
+0
+  untested
+"bartsch-state as plate key"
+2
+0
+2
+0
+"bartsch-state as state key"
+2
+0
+2
+0
+"bartsch-state as sheet key"
+2
+2
+0
+0
+  refuted  rijksmuseum/RP-P-OB-617  rijksmuseum/RP-P-1962-39
+      inventory: different(sheet)
+  refuted  rijksmuseum/RP-P-OB-618  rijksmuseum/RP-P-1962-40
+      inventory: different(sheet)
+"nh-state as state key"
+2
+0
+2
+0
+"nh-state as sheet key"
+2
+2
+0
+0
+"rijks-pid as sheet key"
+0
+0
+0
+0
+  untested
+"met-object as sheet key"
+0
+0
+0
+0
+  untested
+"lugt-mark as plate key"
+6
+3
+3
+0
+  refuted  rijksmuseum/RP-P-OB-616  rijksmuseum/RP-P-OB-611
+      catalogue(bartsch): different(plate)
+      catalogue(hollstein): different(plate)
+      catalogue(new-hollstein): different(plate)
+  refuted  rijksmuseum/RP-P-OB-617  rijksmuseum/RP-P-OB-611
+      catalogue(bartsch): different(plate)
+      catalogue(hollstein): different(plate)
+      catalogue(new-hollstein): different(plate)
+  refuted  rijksmuseum/RP-P-OB-618  rijksmuseum/RP-P-OB-611
+      catalogue(bartsch): different(plate)
+      catalogue(hollstein): different(plate)
+      catalogue(new-hollstein): different(plate)
+  corroborated  rijksmuseum/RP-P-OB-616  rijksmuseum/RP-P-OB-617
+      catalogue(bartsch): same(plate)
+      catalogue(hollstein): same(plate)
+      catalogue(new-hollstein): same(plate)
+  corroborated  rijksmuseum/RP-P-OB-616  rijksmuseum/RP-P-OB-618
+      catalogue(bartsch): same(plate)
+      catalogue(hollstein): same(plate)
+      catalogue(new-hollstein): same(plate)
+  corroborated  rijksmuseum/RP-P-OB-617  rijksmuseum/RP-P-OB-618
+      catalogue(bartsch): same(plate)
+      catalogue(hollstein): same(plate)
+      catalogue(new-hollstein): same(plate)
+"lugt-mark as state key"
+6
+6
+0
+0
+"lugt-mark as sheet key"
+6
+6
+0
+0
+"wikidata-p217 as plate key"
+1
+0
+0
+1
+  unchecked  rijksmuseum/RP-P-1962-39  met/41.1.31
+"wikidata-p217 as state key"
+1
+0
+0
+1
+"wikidata-p217 as sheet key"
+1
+1
+0
+0
+  refuted  rijksmuseum/RP-P-1962-39  met/41.1.31
+      inventory: different(sheet)
+"wikidata-p3634 as sheet key"
+0
+0
+0
+0
+  untested
+"the notation 78-3(5), read"
+  14 strings, 14 agree with the rows written by hand
+  bartsch 78: 5 states counted
+  bartsch 76: 8 states counted
+  new-hollstein 274: 5 states counted
+  new-hollstein 290: 8 states counted
+"why wikidata-p217 identifies rijksmuseum/RP-P-1962-39 and met/41.1.31"
+  both bear Q1218084
+    rijksmuseum/RP-P-1962-39: by the reading inventory-number-read-as-identity, from
+      wikidata_statement('Q1218084','P217','RP-P-1962-39','Rijksmuseum')
+      inventory_name('rijksmuseum/RP-P-1962-39','Rijksmuseum','RP-P-1962-39')
+    met/41.1.31: by the reading inventory-number-read-as-identity, from
+      wikidata_statement('Q1218084','P217','41.1.31','Metropolitan Museum of Art')
+      inventory_name('met/41.1.31','Metropolitan Museum of Art','41.1.31')
+exit=0

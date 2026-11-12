@@ -1,0 +1,15 @@
+01    met   a judged difference survives the identification it contradicts
+07    met   not identified is not judged different
+10    met   a difference has a derivation: who said it, and at which level
+02    met   a refused identification is a verdict, and the run goes on
+03    met   refusing leaves nothing behind
+11    met   a refusal and its reasons come in the same answer
+04    lost  levels are not sorts: a sentence across levels is accepted
+06    met   two sources that disagree are both kept
+06    met   two hypotheses are held at once, and their verdicts stay
+09    met   the author of a judgment is in the answer
+05    met   withdrawing a judgment withdraws what followed from it
+08    met   unchecked is one negation: no independent source says anything
+up    met   identity goes up and not down, as two rules and not for free
+time  met   an identity can hold for a time
+exit=0

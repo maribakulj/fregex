@@ -15,6 +15,12 @@ All observations are for **egglog 3.0.0**, built from crates.io on
 12 November 2026. They describe one version of one tool. Several look like
 choices that suit its intended use; none is offered as a defect.
 
+Read as a list of requirements, this file is also the specification of
+the engine in `prolog/levels.pl`.
+[`frictions/requirements.pl`](frictions/requirements.pl) puts each
+requirement to that engine, under the number of the observation that
+states it. One of them, 04, is met by egglog and lost in Prolog.
+
 ## What works as is
 
 - **Levels.** One sort per level (`Sheet`, `State`, `Plate`). A sheet and a
@@ -108,6 +114,9 @@ the answers are right and can still be proved. But then equality takes no
 part in the case at all: nothing is merged and nothing propagates, and
 the engine does what a Datalog would do. An identity that holds for a time
 has no form here between those two.
+[`withdrawn.pl`](cases/wall-drawings/withdrawn.pl) gives it one: each
+judgment carries its period, and identities are chained only through
+judgments in force at the date asked.
 
 ## Absence
 

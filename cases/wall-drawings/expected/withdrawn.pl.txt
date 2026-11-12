@@ -1,0 +1,17 @@
+"is, read as identity, the dates ignored"
+  surface(stern-house/wall) is papers(menil,certificate and diagram)
+      execution of 1991, between(1991,2013)
+      menil registrar's letter, from(2014)
+"is, read as identity, each statement with its dates"
+  1995  wall_drawing(679) is surface(stern-house/wall)
+  2013  no statement in force
+  2015  wall_drawing(679) is papers(menil,certificate and diagram)
+  2018  wall_drawing(679) is papers(menil,certificate and diagram)
+"the wall is the papers, by year asked"
+  1995  no
+  2013  no
+  2015  no
+  2018  no
+"which wall is being uncovered, by year asked"
+  2018  stern-house/wall
+exit=0

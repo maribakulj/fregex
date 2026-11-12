@@ -12,7 +12,9 @@ one level and wrong one level down.
 This branch writes that question in [egglog](https://github.com/egraphs-good/egglog)
 and runs it on two real cases. It has two results: what the records of
 each case allow one to say about its identifiers, and a list of the places
-where egglog, built for a different kind of equality, resists.
+where egglog, built for a different kind of equality, resists. A second
+engine, in Prolog, then runs the same audit on the same facts, and the two
+are compared.
 
 ## The first case: a print
 
@@ -161,33 +163,97 @@ in `frictions/` and its recorded output. In short:
 What needed no work: sorts as levels, identity that propagates upward and
 not downward, hypotheses tried with `push`/`pop`, and proofs of identities.
 
+## The same audit in Prolog
+
+The list above reads as a specification. [`prolog/levels.pl`](prolog/levels.pl)
+is an engine written to it, for SWI-Prolog, in about two hundred lines. A
+case tells it six things: what is compared, which identifiers each thing
+bears, what the sources judge the same or different and at which level,
+how the levels are ordered, and which evidence is the identifier under
+another name. A hypothesis is an argument, so nothing is assumed and
+nothing is undone.
+
+It reads the same `facts.egg` as egglog, through a small grammar
+([`prolog/egg.pl`](prolog/egg.pl)), so there is one transcription and not
+two.
+
+**The two engines agree.** On the Three Crosses, the 21 hypotheses give the
+same four numbers in both; on the wall drawings, the same three.
+`check.sh` compares them on every run.
+
+**What the requirements become.**
+[`frictions/requirements.pl`](frictions/requirements.pl) puts each one to
+the engine on a made-up case:
+
+| Requirement | In Prolog |
+|---|---|
+| A judged difference is a fact | A row with a source; it is still there when the two things are identified, and that is what refutes |
+| A contradicted identification is refused, readably | A verdict, with its reasons, and the run goes on; nothing is left behind |
+| Sources that disagree are kept side by side | Both rows are kept; the pair is refuted and marked contested |
+| A judgment can be withdrawn | Retracting the row changes every verdict that rested on it |
+| An identity can hold for a time | A judgment carries a period; a chain of identities is followed only through judgments in force at the date asked |
+| "Unchecked" is a verdict | One negation |
+| An identity can be traced to its author | The source is an argument of every judgment and comes out with the verdict |
+
+**What the dates change.** `withdrawn.egg` had to choose between an
+identity that made a wall the same thing as papers, and a relation with
+dates that used no identity. In
+[`withdrawn.pl`](cases/wall-drawings/withdrawn.pl) "is" stays an identity
+in both readings. Without dates the wall is the papers, as in egglog. With
+them, the wall is the work in 1995, the papers are the work in 2015, and
+the wall is the papers in none of the years asked.
+
+**Two notations are read by a grammar.** The rows that `facts.egg` gives
+for `78-3(5)` (a number, a state) were written by hand; `audit.pl` reads
+the fourteen strings and checks the rows against the reading. The four
+rows that `executions.egg` writes for the range `78.1.1-4` are produced by
+a grammar in `executions.pl`. The second reading is a relation from one
+string to several.
+
+**What Prolog costs.** Three things egglog gave for nothing:
+
+- Levels are not sorts. A judgment that a sheet and a wall are the same
+  plate is accepted without complaint.
+- "Same sheet, so same plate" and "two plates, so two sheets" are two
+  rules of the engine, not a property of the language.
+- An explanation is a chain that the engine builds for the two questions
+  it knows how to explain. egglog's proofs cover any equality.
+
 ## Running it
 
 ```sh
 cargo install egglog --locked --version 3.0.0
+apt install swi-prolog-nox        # or: brew install swi-prolog
 ./check.sh
 ```
 
-`check.sh` runs every program and compares its output with the file in the
-neighbouring `expected/` directory. `./check.sh --update` records the
-current output instead. The case programs also carry their own `check`
-assertions, which fail the run whatever the recorded output says. In the
-first case: identity must not go down a level, merging two sheets must be
-reported, and an unchecked pair must be neither refuted nor corroborated.
-In the second: the two overlaps, the pair left unchecked, and the years for
-which nothing can be said.
+`check.sh` runs every program in both engines and compares its output
+with the file in the neighbouring `expected/` directory, then compares the
+two engines' numbers. `./check.sh --update` records the current output
+instead. The case programs also carry their own assertions, which fail
+the run whatever the recorded output says. In the first case: identity
+must not go down a level, merging two sheets must be reported, and an
+unchecked pair must be neither refuted nor corroborated. In the second:
+the two overlaps, the pair left unchecked, and the years for which nothing
+can be said.
 
-To run one program by hand, do it from its own directory, because
-`(include ...)` is resolved from the working directory:
+To run one program by hand, do it from its own directory, because egglog
+resolves `(include ...)` from the working directory:
 
 ```sh
 cd cases/three-crosses
 egglog audit.egg
 egglog --proofs explain.egg
+swipl audit.pl
 
 cd ../wall-drawings
 egglog executions.egg
 egglog --proofs withdrawn.egg
+swipl executions.pl
+swipl withdrawn.pl
+
+cd ../../frictions
+swipl requirements.pl
 ```
 
 ## Limits
@@ -203,9 +269,15 @@ egglog --proofs withdrawn.egg
 - A plate is not a catalogue entry. No record here individuates plates
   except through a catalogue, so the audit can show two catalogues
   disagreeing and cannot show one being wrong.
-- The facts were transcribed by hand. There is no extraction step, so
-  nothing here tests what a regular expression or a model would do to
-  these identifiers.
+- The facts were transcribed by hand. Two notations are now read by a
+  grammar and checked against that transcription; nothing is extracted
+  from the pages themselves, so nothing here tests what a regular
+  expression or a model would do to these identifiers in the wild.
+- The Prolog engine has run on a dozen records and five executions. It
+  finds what a hypothesis identifies by plain search; nothing has been
+  done for size.
+- That egglog fails where Prolog works is shown on these small cases and
+  on a made-up one. Neither engine has seen a corpus.
 - The state numbers for the Rijksmuseum depend on reading `-3(5)` as
   "state 3 of 5", which the pages do not spell out.
 - The Wikidata rows were not checked against the live item.
